@@ -1,4 +1,6 @@
+import { useState } from "react";
 export default function TrackerInput({ handleData }) {
+  const [isExpenseActive, setIsExpenseActive] = useState(false);
   return (
     <div className="p-6 py-8 bg-[#F9FAFB] border rounded-md">
       <h2 className="text-3xl font-semibold leading-7 text-gray-800 text-center">
@@ -7,10 +9,26 @@ export default function TrackerInput({ handleData }) {
 
       <form>
         <div className=" flex divide-x divide-slate-400/20 overflow-hidden rounded-md bg-white text-[0.8125rem] font-medium leading-5 text-slate-700 shadow-sm ring-1 ring-slate-700/10 mt-6">
-          <div className="cursor-pointer bg-teal-500 text-center flex-1 px-4 py-2 hover:bg-slate-50 hover:text-slate-900 active">
+          <div
+            className={`cursor-pointer ${
+              isExpenseActive && "bg-teal-500"
+            } text-center flex-1 px-4 py-2 hover:bg-slate-50 hover:text-slate-900`}
+            onClick={() => {
+              handleData("expense");
+              setIsExpenseActive(true);
+            }}
+          >
             Expense
           </div>
-          <div className="cursor-pointer text-center flex-1 px-4 py-2 hover:bg-slate-50 hover:text-slate-900">
+          <div
+            className={`cursor-pointer ${
+              !isExpenseActive && "bg-teal-500"
+            } text-center flex-1 px-4 py-2 hover:bg-slate-50 hover:text-slate-900`}
+            onClick={() => {
+              handleData("expense");
+              setIsExpenseActive(false);
+            }}
+          >
             Income
           </div>
         </div>
