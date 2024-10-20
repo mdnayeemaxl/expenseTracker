@@ -1,13 +1,34 @@
 import { useState } from "react";
 export default function TrackerInput({ handleData }) {
   const [isExpenseActive, setIsExpenseActive] = useState(false);
+  const [formData, setFormData] = useState({
+    category: "",
+    amount: "",
+    date: "",
+  });
+
+  function getFormData(e) {
+    e.preventDefault(); // Prevent the form from reloading the page
+    console.log(formData.category);
+    console.log(formData.amount);
+    console.log(formData.date);
+  }
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+
   return (
     <div className="p-6 py-8 bg-[#F9FAFB] border rounded-md">
       <h2 className="text-3xl font-semibold leading-7 text-gray-800 text-center">
         Expense Tracker
       </h2>
 
-      <form>
+      <form onSubmit={getFormData}>
         <div className=" flex divide-x divide-slate-400/20 overflow-hidden rounded-md bg-white text-[0.8125rem] font-medium leading-5 text-slate-700 shadow-sm ring-1 ring-slate-700/10 mt-6">
           <div
             className={`cursor-pointer ${
@@ -25,7 +46,7 @@ export default function TrackerInput({ handleData }) {
               !isExpenseActive && "bg-teal-500"
             } text-center flex-1 px-4 py-2 hover:bg-slate-50 hover:text-slate-900`}
             onClick={() => {
-              handleData("expense");
+              handleData("income");
               setIsExpenseActive(false);
             }}
           >
@@ -46,6 +67,7 @@ export default function TrackerInput({ handleData }) {
               name="category"
               autoComplete="category-name"
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+              onChange={handleChange}
             >
               <option>Education</option>
               <option>Food</option>
@@ -74,6 +96,7 @@ export default function TrackerInput({ handleData }) {
               autoComplete="off"
               placeholder="12931"
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -91,8 +114,8 @@ export default function TrackerInput({ handleData }) {
               name="date"
               id="date"
               autoComplete="off"
-              placeholder="12931"
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
+              onChange={handleChange}
             />
           </div>
         </div>
